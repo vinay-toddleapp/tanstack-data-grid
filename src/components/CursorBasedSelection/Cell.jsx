@@ -8,10 +8,12 @@ const Cell = ({ getValue, row, column, table }) => {
   const startCell = table.options.meta?.selectionStartCell;
   const endCell = table.options.meta?.selectionEndCell;
 
-  const isSelected =
-    table.options.meta?.selectedCells?.some(
-      (cell) => cell.rowIndex === row.index && cell.columnId === column.id
-    ) || isWithinSelection(row.index, column.getIndex(), startCell, endCell);
+  const isSelected = isWithinSelection(
+    row.index,
+    column.getIndex(),
+    startCell,
+    endCell
+  );
 
   const onBlur = () => {
     table.options.meta?.updateData(row.index, column.id, value);
@@ -49,10 +51,8 @@ const Cell = ({ getValue, row, column, table }) => {
     }
   };
 
-  const handleMouseUp = (event) => {
+  const handleMouseUp = () => {
     table.options.meta?.endSelection();
-    // table.options.meta?.setSelectionStartCell(null);
-    // table.options.meta?.setSelectionEndCell(null);
   };
 
   useEffect(() => {
