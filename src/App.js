@@ -4,6 +4,7 @@ import EditableTable from "./components/EditableTable/EditableTable";
 import EditableAndNonEditableColumn from "./components/EditableAndNonEditableColumn/EditableAndNonEditableColumn";
 import EditAndDisabledCell from "./components/EditAndDisabledCell/EditAndDisabledCell";
 import Accessibility from "./components/Accessibility/Accessibility";
+import CursorBasedSelection from "./components/CursorBasedSelection/CursorBasedSelection";
 
 const App = () => {
   const allDemos = {
@@ -31,6 +32,11 @@ const App = () => {
       name: "Table with accessibilty",
       value: "accessibility",
       component: <Accessibility />,
+    },
+    cursorBasedSelection: {
+      name: "Cursor based multi selection",
+      value: "cursorBasedSelection",
+      component: <CursorBasedSelection />,
     },
   };
   const [currentDemo, setCurrentDemo] = useState("basic");
