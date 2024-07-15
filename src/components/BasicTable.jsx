@@ -37,14 +37,19 @@ const BasicTable = () => {
   });
 
   return (
-    <table>
+    <table className="table-auto border-collapse w-full">
       <thead>
         {table.getHeaderGroups().map((headerGroup) => {
           return (
-            <tr key={headerGroup.id}>
+            <tr key={headerGroup.id} className="border-b">
               {headerGroup.headers.map((header) => {
                 return (
-                  <th key={header.id}>{header.column.columnDef.header}</th>
+                  <th
+                    key={header.id}
+                    className="border px-4 py-2 bg-gray-100 text-left"
+                  >
+                    {header.column.columnDef.header}
+                  </th>
                 );
               })}
             </tr>
@@ -54,10 +59,10 @@ const BasicTable = () => {
       <tbody>
         {table.getCoreRowModel().rows.map((row) => {
           return (
-            <tr key={row.id}>
-              {row._getAllVisibleCells().map((cell) => {
+            <tr key={row.id} className="border-b hover:bg-gray-50">
+              {row.getAllCells().map((cell) => {
                 return (
-                  <td key={cell.id}>
+                  <td key={cell.id} className="border px-4 py-2">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 );
