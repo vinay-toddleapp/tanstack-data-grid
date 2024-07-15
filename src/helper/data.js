@@ -10,3 +10,54 @@ export const data = [
   { firstName: "James", lastName: "Anderson", age: 40, sex: "Male" },
   { firstName: "Barbara", lastName: "Thomas", age: 24, sex: "Female" },
 ];
+
+export const editAndDisabledCellData = [
+  {
+    firstName: {
+      value: "John",
+      isEditable: false,
+    },
+    lastName: {
+      value: "Doe",
+      isEditable: true,
+    },
+    age: { value: 28, isEditable: false },
+    sex: { value: "Male", isEditable: false },
+  },
+  {
+    firstName: {
+      value: "Jane",
+      isEditable: true,
+    },
+    lastName: {
+      value: "Smith",
+      isEditable: false,
+    },
+    age: {
+      value: 22,
+      isEditable: false,
+    },
+    sex: {
+      value: "Female",
+      isEditable: true,
+    },
+  },
+  {
+    firstName: {
+      value: "Michael",
+      isEditable: false,
+    },
+    lastName: {
+      value: "Johnson",
+      isEditable: true,
+    },
+    age: {
+      value: 35,
+      isEditable: false,
+    },
+    sex: {
+      value: "Male",
+      isEditable: true,
+    },
+  },
+];
