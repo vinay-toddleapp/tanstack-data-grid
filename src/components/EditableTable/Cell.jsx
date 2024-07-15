@@ -28,10 +28,7 @@ const Cell = ({ getValue, row, column, table }) => {
   }, [initialValue]);
 
   return (
-    <div
-      onClick={handleClick}
-      className={isSelected ? "border border-blue-500" : ""}
-    >
+    <>
       {isEditing ? (
         <input
           value={value}
@@ -40,9 +37,14 @@ const Cell = ({ getValue, row, column, table }) => {
           className="bg-transparent w-full"
         />
       ) : (
-        <div>{value}</div>
+        <div
+          onClick={handleClick}
+          className={isSelected ? "border border-blue-500" : ""}
+        >
+          {value}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

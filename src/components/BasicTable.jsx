@@ -62,7 +62,7 @@ const BasicTable = () => {
             <tr key={row.id} className="border-b hover:bg-gray-50">
               {row.getAllCells().map((cell) => {
                 return (
-                  <td key={cell.id} className="border px-4 py-2">
+                  <td key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 );

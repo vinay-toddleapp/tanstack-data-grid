@@ -3,6 +3,7 @@ import BasicTable from "./components/BasicTable";
 import EditableTable from "./components/EditableTable/EditableTable";
 import EditableAndNonEditableColumn from "./components/EditableAndNonEditableColumn/EditableAndNonEditableColumn";
 import EditAndDisabledCell from "./components/EditAndDisabledCell/EditAndDisabledCell";
+import Accessibility from "./components/Accessibility/Accessibility";
 
 const App = () => {
   const allDemos = {
@@ -25,6 +26,11 @@ const App = () => {
       name: "Cell level control for edit state",
       value: "cellLevelControl",
       component: <EditAndDisabledCell />,
+    },
+    accessibility: {
+      name: "Table with accessibilty",
+      value: "accessibility",
+      component: <Accessibility />,
     },
   };
   const [currentDemo, setCurrentDemo] = useState("basic");

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const Cell = ({ getValue, row, column, table }) => {
-  const { value: initialValue, isEditable: isCellEditable } = getValue();
+  const initialValue = getValue();
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(initialValue);
   const isSelected =
@@ -12,11 +12,21 @@ const Cell = ({ getValue, row, column, table }) => {
     table.options.meta?.updateData(row.index, column.id, value);
   };
 
-  const handleClick = () => {
-    if (!isCellEditable) return;
+  const handleClick = (event) => {
     if (isSelected) {
       setIsEditing(true);
+      console.log(event.target);
+      event.target.focus();
     } else {
+      table.options.meta?.setSelectedCell({
+        rowIndex: row.index,
+        columnId: column.id,
+      });
+    }
+  };
+
+  const handleFocus = () => {
+    if (!isSelected) {
       table.options.meta?.setSelectedCell({
         rowIndex: row.index,
         columnId: column.id,
@@ -29,25 +39,21 @@ const Cell = ({ getValue, row, column, table }) => {
   }, [initialValue]);
 
   return (
-    <div>
-      {isEditing && isCellEditable ? (
+    <>
+      {isEditing ? (
         <input
+          tabIndex={isEditing ? 0 : -1}
           value={value}
           onChange={(event) => setValue(event.target.value)}
           onBlur={onBlur}
           className="bg-transparent w-full"
         />
       ) : (
-        <div
-          onClick={handleClick}
-          className={`${isSelected ? "border border-blue-500" : ""} ${
-            !isCellEditable ? "bg-gray-100" : ""
-          }`}
-        >
+        <div tabIndex={0} onClick={handleClick} onFocus={handleFocus}>
           {value}
         </div>
       )}
-    </div>
+    </>
   );
 };
 

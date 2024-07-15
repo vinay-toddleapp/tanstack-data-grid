@@ -7,29 +7,29 @@ import React, { useState } from "react";
 import { data } from "../../helper/data";
 import Cell from "./Cell";
 
-const EditableAndNonEditableColumn = () => {
+const Accessibility = () => {
   const [tableData, setTableData] = useState(data);
   const [selectedCell, setSelectedCell] = useState(null);
   const columns = [
     {
       accessorKey: "firstName",
-      header: "First Name (Editable)",
+      header: "First Name",
       cell: Cell,
     },
     {
       accessorKey: "lastName",
       header: "Last Name",
-      cell: (props) => <p>{props.getValue()}</p>,
+      cell: Cell,
     },
     {
       accessorKey: "age",
-      header: "Age (Editable)",
+      header: "Age",
       cell: Cell,
     },
     {
       accessorKey: "sex",
       header: "Sex",
-      cell: (props) => <p>{props.getValue()}</p>,
+      cell: Cell,
     },
   ];
   const table = useReactTable({
@@ -80,7 +80,7 @@ const EditableAndNonEditableColumn = () => {
             <tr key={row.id} className="border-b hover:bg-gray-50">
               {row.getAllCells().map((cell) => {
                 return (
-                  <td key={cell.id}>
+                  <td key={cell.id} className="border px-4 py-2">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 );
@@ -93,4 +93,4 @@ const EditableAndNonEditableColumn = () => {
   );
 };
 
-export default EditableAndNonEditableColumn;
+export default Accessibility;
