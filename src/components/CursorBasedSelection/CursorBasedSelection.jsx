@@ -9,8 +9,6 @@ import Cell from "./Cell";
 
 const CursorBasedSelection = () => {
   const [tableData, setTableData] = useState(data);
-  const [isSelecting, setIsSelecting] = useState(false);
-  // const [selectedCells, setSelectedCells] = useState([]);
   const [selectionStartCell, setSelectionStartCell] = useState(null);
   const [selectionEndCell, setSelectionEndCell] = useState(null);
   const columns = [
@@ -52,22 +50,6 @@ const CursorBasedSelection = () => {
           )
         );
       },
-      startSelection: (rowIndex, columnId) => {
-        setIsSelecting(true);
-        // setSelectedCells([{ rowIndex, columnId }]);
-      },
-      updateSelection: (rowIndex, columnId) => {
-        if (isSelecting) {
-          // setSelectedCells((old) => [...old, { rowIndex, columnId }]);
-        }
-      },
-      endSelection: () => {
-        setIsSelecting(false);
-      },
-      clearSelectionOnEdit: () => {
-        // setSelectedCells([]);
-      },
-      // selectedCells,
       selectionStartCell,
       setSelectionStartCell,
       selectionEndCell,

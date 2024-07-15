@@ -23,7 +23,6 @@ const Cell = ({ getValue, row, column, table }) => {
   const handleMouseDown = (event) => {
     if (isSelected) {
       setIsEditing(true);
-      table.options.meta?.clearSelectionOnEdit();
       table.options.meta?.setSelectionStartCell(null);
       table.options.meta?.setSelectionEndCell(null);
       return;
@@ -37,22 +36,16 @@ const Cell = ({ getValue, row, column, table }) => {
         rowIndex: row.index,
         columnId: column.getIndex(),
       });
-      table.options.meta?.startSelection(row.index, column.id);
     }
   };
 
   const handleMouseEnter = (event) => {
     if (event.buttons === 1) {
-      table.options.meta?.updateSelection(row.index, column.id);
       table.options.meta?.setSelectionEndCell({
         rowIndex: row.index,
         columnId: column.getIndex(),
       });
     }
-  };
-
-  const handleMouseUp = () => {
-    table.options.meta?.endSelection();
   };
 
   useEffect(() => {
@@ -75,7 +68,6 @@ const Cell = ({ getValue, row, column, table }) => {
           } select-none`}
           onMouseDown={handleMouseDown}
           onMouseEnter={handleMouseEnter}
-          onMouseUp={handleMouseUp}
         >
           {value}
         </div>
