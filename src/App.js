@@ -5,6 +5,7 @@ import EditableAndNonEditableColumn from "./components/EditableAndNonEditableCol
 import EditAndDisabledCell from "./components/EditAndDisabledCell/EditAndDisabledCell";
 import Accessibility from "./components/Accessibility/Accessibility";
 import CursorBasedSelection from "./components/CursorBasedSelection/CursorBasedSelection";
+import DragHandleBasedCopy from "./components/DragHandleBasedCopy/DragHandleBasedCopy";
 
 const App = () => {
   const allDemos = {
@@ -37,6 +38,11 @@ const App = () => {
       name: "Cursor based multi selection",
       value: "cursorBasedSelection",
       component: <CursorBasedSelection />,
+    },
+    dragHandleBasedCopy: {
+      name: "Drag handle in cell to copy data",
+      value: "dragHandleBasedCopy",
+      component: <DragHandleBasedCopy />,
     },
   };
   const [currentDemo, setCurrentDemo] = useState("basic");
