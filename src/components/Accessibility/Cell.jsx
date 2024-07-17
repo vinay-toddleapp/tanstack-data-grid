@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const Cell = ({ getValue, row, column, table }) => {
   const initialValue = getValue();
@@ -7,21 +7,28 @@ const Cell = ({ getValue, row, column, table }) => {
   const isSelected =
     table.options.meta?.selectedCell?.rowIndex === row.index &&
     table.options.meta?.selectedCell?.columnId === column.id;
+  const divRef = useRef(null);
 
   const onBlur = () => {
     table.options.meta?.updateData(row.index, column.id, value);
+    table.options.meta?.setSelectedCell(null);
+    setIsEditing(false);
   };
 
   const handleClick = (event) => {
     if (isSelected) {
-      setIsEditing(true);
-      console.log(event.target);
       event.target.focus();
     } else {
       table.options.meta?.setSelectedCell({
         rowIndex: row.index,
         columnId: column.id,
       });
+    }
+  };
+
+  const handleDoubleClick = () => {
+    if (isSelected) {
+      setIsEditing(true);
     }
   };
 
@@ -34,9 +41,31 @@ const Cell = ({ getValue, row, column, table }) => {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (isSelected && event.key === "Enter") {
+      setIsEditing(true);
+    }
+  };
+
+  const handleInputKeyDown = (event) => {
+    if (event.key === "Escape") {
+      setIsEditing(false);
+      table.options.meta?.setSelectedCell({
+        rowIndex: row.index,
+        columnId: column.id,
+      });
+    }
+  };
+
   useEffect(() => {
     setValue(initialValue);
   }, [initialValue]);
+
+  useEffect(() => {
+    if (!isEditing && isSelected && divRef.current) {
+      divRef.current.focus();
+    }
+  }, [isEditing, isSelected]);
 
   return (
     <>
@@ -46,10 +75,20 @@ const Cell = ({ getValue, row, column, table }) => {
           value={value}
           onChange={(event) => setValue(event.target.value)}
           onBlur={onBlur}
+          autoFocus={isEditing}
+          onKeyDown={handleInputKeyDown}
           className="bg-transparent w-full"
         />
       ) : (
-        <div tabIndex={0} onClick={handleClick} onFocus={handleFocus}>
+        <div
+          ref={divRef}
+          tabIndex={0}
+          onClick={handleClick}
+          onDoubleClick={handleDoubleClick}
+          onFocus={handleFocus}
+          onKeyDown={handleKeyDown}
+          className="focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
           {value}
         </div>
       )}
