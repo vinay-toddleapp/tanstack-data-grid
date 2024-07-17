@@ -6,7 +6,7 @@ const Cell = ({ getValue, row, column, table }) => {
   const [value, setValue] = useState(initialValue);
   const isSelected =
     table.options.meta?.selectedCell?.rowIndex === row.index &&
-    table.options.meta?.selectedCell?.columnId === column.id;
+    table.options.meta?.selectedCell?.columnId === column.getIndex();
   const divRef = useRef(null);
 
   const onBlur = () => {
@@ -21,7 +21,7 @@ const Cell = ({ getValue, row, column, table }) => {
     } else {
       table.options.meta?.setSelectedCell({
         rowIndex: row.index,
-        columnId: column.id,
+        columnId: column.getIndex(),
       });
     }
   };
@@ -36,23 +36,74 @@ const Cell = ({ getValue, row, column, table }) => {
     if (!isSelected) {
       table.options.meta?.setSelectedCell({
         rowIndex: row.index,
-        columnId: column.id,
+        columnId: column.getIndex(),
       });
     }
   };
 
   const handleKeyDown = (event) => {
-    if (isSelected && event.key === "Enter") {
+    const keyName = event.key;
+    if (isSelected && keyName === "Enter") {
       setIsEditing(true);
+    } else if (keyName === "ArrowRight") {
+      moveRight();
+    } else if (keyName === "ArrowLeft") {
+      moveLeft();
+    } else if (keyName === "ArrowDown") {
+      moveDown();
+    } else if (keyName === "ArrowUp") {
+      moveUp();
     }
   };
+
+  function moveRight() {
+    const currentColumnIndex = table.options.meta.selectedCell.columnId;
+    const totalColumns = table.getAllColumns().length;
+    if (currentColumnIndex !== totalColumns - 1) {
+      table.options.meta.setSelectedCell({
+        rowIndex: row.index,
+        columnId: currentColumnIndex + 1,
+      });
+    }
+  }
+
+  function moveLeft() {
+    const currentColumnIndex = table.options.meta.selectedCell.columnId;
+    if (currentColumnIndex !== 0) {
+      table.options.meta.setSelectedCell({
+        rowIndex: row.index,
+        columnId: currentColumnIndex - 1,
+      });
+    }
+  }
+
+  function moveDown() {
+    const currentRowIndex = row.index;
+    const totalRows = table.getCoreRowModel().rows.length;
+    if (currentRowIndex !== totalRows - 1) {
+      table.options.meta.setSelectedCell({
+        rowIndex: currentRowIndex + 1,
+        columnId: table.options.meta.selectedCell.columnId,
+      });
+    }
+  }
+
+  function moveUp() {
+    const currentRowIndex = row.index;
+    if (currentRowIndex !== 0) {
+      table.options.meta.setSelectedCell({
+        rowIndex: currentRowIndex - 1,
+        columnId: table.options.meta.selectedCell.columnId,
+      });
+    }
+  }
 
   const handleInputKeyDown = (event) => {
     if (event.key === "Escape") {
       setIsEditing(false);
       table.options.meta?.setSelectedCell({
         rowIndex: row.index,
-        columnId: column.id,
+        columnId: column.getIndex(),
       });
     }
     if (event.key === "Enter") {
@@ -60,7 +111,7 @@ const Cell = ({ getValue, row, column, table }) => {
       if (nextRowIndex < table.getRowModel().rows.length) {
         table.options.meta?.setSelectedCell({
           rowIndex: nextRowIndex,
-          columnId: column.id,
+          columnId: column.getIndex(),
         });
         setIsEditing(false);
         setTimeout(() => {
@@ -72,20 +123,7 @@ const Cell = ({ getValue, row, column, table }) => {
           }
         }, 0);
       } else {
-        const firstRowIndex = 0;
-        table.options.meta?.setSelectedCell({
-          rowIndex: firstRowIndex,
-          columnId: column.id,
-        });
         setIsEditing(false);
-        setTimeout(() => {
-          const firstCell = document.querySelector(
-            `[data-row-index="${firstRowIndex}"][data-column-id="${column.id}"]`
-          );
-          if (firstCell) {
-            firstCell.focus();
-          }
-        }, 0);
       }
     }
   };
