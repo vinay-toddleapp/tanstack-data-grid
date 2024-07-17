@@ -43,8 +43,9 @@ const Cell = ({ getValue, row, column, table }) => {
 
   const handleKeyDown = (event) => {
     const keyName = event.key;
+    const isShiftPressed = event.shiftKey;
     if (isSelected && keyName === "Enter") {
-      setIsEditing(true);
+      isShiftPressed ? moveUp() : setIsEditing(true);
     } else if (keyName === "ArrowRight") {
       moveRight();
     } else if (keyName === "ArrowLeft") {
