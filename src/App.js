@@ -45,11 +45,16 @@ const App = () => {
       component: <DragHandleBasedCopy />,
     },
   };
-  const [currentDemo, setCurrentDemo] = useState("basic");
+  const allDemosKeys = Object.keys(allDemos);
+  const defaultValue = allDemosKeys[allDemosKeys.length - 1];
+  const [currentDemo, setCurrentDemo] = useState(allDemos[defaultValue].value);
 
   return (
     <div className="space-y-10 p-10">
-      <select onChange={(event) => setCurrentDemo(event.target.value)}>
+      <select
+        onChange={(event) => setCurrentDemo(event.target.value)}
+        value={currentDemo}
+      >
         {Object.values(allDemos).map((demo) => {
           return (
             <option key={demo.value} value={demo.value}>
