@@ -55,6 +55,39 @@ const Cell = ({ getValue, row, column, table }) => {
         columnId: column.id,
       });
     }
+    if (event.key === "Enter") {
+      const nextRowIndex = row.index + 1;
+      if (nextRowIndex < table.getRowModel().rows.length) {
+        table.options.meta?.setSelectedCell({
+          rowIndex: nextRowIndex,
+          columnId: column.id,
+        });
+        setIsEditing(false);
+        setTimeout(() => {
+          const nextCell = document.querySelector(
+            `[data-row-index="${nextRowIndex}"][data-column-id="${column.id}"]`
+          );
+          if (nextCell) {
+            nextCell.focus();
+          }
+        }, 0);
+      } else {
+        const firstRowIndex = 0;
+        table.options.meta?.setSelectedCell({
+          rowIndex: firstRowIndex,
+          columnId: column.id,
+        });
+        setIsEditing(false);
+        setTimeout(() => {
+          const firstCell = document.querySelector(
+            `[data-row-index="${firstRowIndex}"][data-column-id="${column.id}"]`
+          );
+          if (firstCell) {
+            firstCell.focus();
+          }
+        }, 0);
+      }
+    }
   };
 
   useEffect(() => {
@@ -71,7 +104,6 @@ const Cell = ({ getValue, row, column, table }) => {
     <>
       {isEditing ? (
         <input
-          tabIndex={isEditing ? 0 : -1}
           value={value}
           onChange={(event) => setValue(event.target.value)}
           onBlur={onBlur}
