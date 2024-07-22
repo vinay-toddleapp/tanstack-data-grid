@@ -6,6 +6,7 @@ import EditAndDisabledCell from "./components/EditAndDisabledCell/EditAndDisable
 import Accessibility from "./components/Accessibility/Accessibility";
 import CursorBasedSelection from "./components/CursorBasedSelection/CursorBasedSelection";
 import DragHandleBasedCopy from "./components/DragHandleBasedCopy/DragHandleBasedCopy";
+import BasicTableUsingCanvas from "./components/BasicTableUsingCanvas/BasicTableUsingCanvas";
 
 const App = () => {
   const allDemos = {
@@ -43,6 +44,11 @@ const App = () => {
       name: "Drag handle in cell to copy data",
       value: "dragHandleBasedCopy",
       component: <DragHandleBasedCopy />,
+    },
+    basicTableUsingCanvas: {
+      name: "Basic table using canvas",
+      value: "basicTableUsingCanvas",
+      component: <BasicTableUsingCanvas />,
     },
   };
   const allDemosKeys = Object.keys(allDemos);
