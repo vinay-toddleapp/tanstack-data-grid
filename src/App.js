@@ -7,6 +7,7 @@ import Accessibility from "./components/Accessibility/Accessibility";
 import CursorBasedSelection from "./components/CursorBasedSelection/CursorBasedSelection";
 import DragHandleBasedCopy from "./components/DragHandleBasedCopy/DragHandleBasedCopy";
 import BasicTableUsingCanvas from "./components/BasicTableUsingCanvas/BasicTableUsingCanvas";
+import EditableCellUsingCanvas from "./components/EditableCellUsingCanvas/EditableCellUsingCanvas";
 
 const App = () => {
   const allDemos = {
@@ -49,6 +50,11 @@ const App = () => {
       name: "Basic table using canvas",
       value: "basicTableUsingCanvas",
       component: <BasicTableUsingCanvas />,
+    },
+    editableCellUsingCanvas: {
+      name: "Select and edit state in canvas table",
+      value: "editableCellUsingCanvas",
+      component: <EditableCellUsingCanvas />,
     },
   };
   const allDemosKeys = Object.keys(allDemos);
